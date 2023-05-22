@@ -1,5 +1,8 @@
-name: Lint, Test and Deploy
-on: push
+name: Lint, Test, Build and Deploy
+on:
+  pull_request:
+    types: opened
+  workflow_dispatch:
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -19,9 +22,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run Test
-        run: npm test
-  deploy:
+        run: npm run test
+  build:
     needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Build
+        run: npm run build
+  deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
