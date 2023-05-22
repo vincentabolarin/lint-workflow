@@ -2,7 +2,18 @@ name: Lint, Test, Build and Deploy
 on:
   pull_request:
     types: opened
+    branches:
+      - main
+      - 'dev-*'
+      - 'feat/**'
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'dev-*'
+      - 'feat/**'
+    paths-ignore:
+      - '.github/workflows/ *'
 jobs:
   lint:
     runs-on: ubuntu-latest
