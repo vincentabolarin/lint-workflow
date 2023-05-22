@@ -1,0 +1,12 @@
+name: Output issues Event Details
+on: issues
+  jobs:
+    output-details:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Output event details
+        run: echo "${{ github.event }}"
